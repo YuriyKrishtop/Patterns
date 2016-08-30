@@ -9,23 +9,19 @@ import java.util.Random;
  */
 public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
     @Override
-    public Collection<Object> postProcessorOperation(Collection<Object> col) {
-        for (Object obj : col) {
-            for(Field field  : obj.getClass().getDeclaredFields())
-            {
-                if (field.isAnnotationPresent(InjectRandomInt.class))
-                {
-                    field.setAccessible(true);
-                    trySetRandomIntToField(obj, field);
-                }
+    public Object postProcessorOperation(Object obj) {
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(InjectRandomInt.class)) {
+                field.setAccessible(true);
+                trySetRandomIntToField(obj, field);
             }
         }
-        return col;
+        return obj;
     }
 
-    private void trySetRandomIntToField(Object obj, Field field){
+    private void trySetRandomIntToField(Object obj, Field field) {
         Random rn = new Random();
-        final int  max = 100000000;
+        final int max = 100000000;
         final int min = 1;
         int n = max - min;
         int i = rn.nextInt() % n;

@@ -15,5 +15,9 @@ public class Main {
         for (Object obj : col) {
             System.out.println(obj);
         }
+        System.out.println(applicationContext.getPostProcessBeans());
+        System.out.println(applicationContext.getBean("SomeClass"));
+        System.out.println(applicationContext.getBean("SomeClass2"));
+        System.out.println(applicationContext.getBean("SomeClass3"));
     }
 }

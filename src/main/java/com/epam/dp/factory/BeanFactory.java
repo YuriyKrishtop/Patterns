@@ -11,20 +11,21 @@ public class BeanFactory {
 
     private Reflections reflections = new Reflections("com.epam.dp.factory");
     private Map<String, Object> beans = new HashMap<>();
+    private Set<Object> postProcessBeans = new HashSet<>();
 
     {
+        Set<Class<? extends BeanPostProcessor>> annotatedPostProcBeans = reflections.getSubTypesOf(BeanPostProcessor.class);
+        for (Class<?> clazz : annotatedPostProcBeans) {
+            tryAddPostProcessBean(clazz);
+        }
         Set<Class<?>> annotatedWith = reflections.getTypesAnnotatedWith(Component.class);
         for (Class<?> clazz : annotatedWith) {
             tryAddToListeners(clazz);
         }
     }
 
-    public Reflections getReflections() {
-        return reflections;
-    }
-
-    public void setReflections(Reflections reflections) {
-        this.reflections = reflections;
+    public Set<Object> getPostProcessBeans() {
+        return postProcessBeans;
     }
 
     public Collection<Object> getBeans() {
@@ -33,6 +34,14 @@ public class BeanFactory {
 
     public Object getBean(final String id) {
         return beans.get(id);
+    }
+
+    private void tryAddPostProcessBean(Class<?> clazz){
+        try {
+            postProcessBeans.add(clazz.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     private void tryAddToListeners(Class<?> clazz) {

@@ -9,14 +9,6 @@ import java.util.Set;
 public class ApplicationContext {
     private BeanFactory beanFactory;
 
-
-    {
-        Set<Class<? extends BeanPostProcessor>> beanPostProcessors = beanFactory.getReflections().getSubTypesOf(BeanPostProcessor.class);
-        for (Class<?> clazz : beanPostProcessors) {
-            
-        }
-    }
-
     public ApplicationContext(BeanFactory beanFactory){
         this.beanFactory = beanFactory;
     }
@@ -29,12 +21,12 @@ public class ApplicationContext {
         return beanFactory.getBeans();
     }
 
-    public BeanFactory getBeanFactory() {
-        return beanFactory;
-    }
-
     public Collection<Object> getInjectRandomIntIntoBeans(){
         return new InjectRandomIntBeanPostProcessor().postProcessorOperation(getBeans());
+    }
+
+    public Set<Object> getPostProcessBeans() {
+        return beanFactory.getPostProcessBeans();
     }
 
 }
