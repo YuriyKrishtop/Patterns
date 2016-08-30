@@ -19,6 +19,14 @@ public class BeanFactory {
         }
     }
 
+    public Reflections getReflections() {
+        return reflections;
+    }
+
+    public void setReflections(Reflections reflections) {
+        this.reflections = reflections;
+    }
+
     public Collection<Object> getBeans() {
         return beans.values();
     }

@@ -25,8 +25,8 @@ public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
 
     private void trySetRandomIntToField(Object obj, Field field){
         Random rn = new Random();
-        int max = 100000000;
-        int min = 1;
+        final int  max = 100000000;
+        final int min = 1;
         int n = max - min;
         int i = rn.nextInt() % n;
         try {

@@ -1,12 +1,21 @@
 package com.epam.dp.factory;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by Iurii on 29.08.2016.
  */
 public class ApplicationContext {
     private BeanFactory beanFactory;
+
+
+    {
+        Set<Class<? extends BeanPostProcessor>> beanPostProcessors = beanFactory.getReflections().getSubTypesOf(BeanPostProcessor.class);
+        for (Class<?> clazz : beanPostProcessors) {
+            
+        }
+    }
 
     public ApplicationContext(BeanFactory beanFactory){
         this.beanFactory = beanFactory;
