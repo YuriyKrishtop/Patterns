@@ -1,5 +1,7 @@
 package com.epam.dp.factory;
 
+import com.epam.dp.factory.someclasses.Component;
+import com.epam.dp.factory.postprocessor.BeanPostProcessor;
 import org.reflections.Reflections;
 
 import java.util.*;
@@ -11,11 +13,11 @@ public class BeanFactory {
 
     private Reflections reflections = new Reflections("com.epam.dp.factory");
     private Map<String, Object> beans = new HashMap<>();
-    private Set<Object> postProcessBeans = new HashSet<>();
+    private Set<BeanPostProcessor> postProcessBeans = new HashSet<>();
 
     {
         Set<Class<? extends BeanPostProcessor>> annotatedPostProcBeans = reflections.getSubTypesOf(BeanPostProcessor.class);
-        for (Class<?> clazz : annotatedPostProcBeans) {
+        for (Class<? extends BeanPostProcessor> clazz : annotatedPostProcBeans) {
             tryAddPostProcessBean(clazz);
         }
         Set<Class<?>> annotatedWith = reflections.getTypesAnnotatedWith(Component.class);
@@ -24,7 +26,7 @@ public class BeanFactory {
         }
     }
 
-    public Set<Object> getPostProcessBeans() {
+    public Set<BeanPostProcessor> getPostProcessBeans() {
         return postProcessBeans;
     }
 
@@ -36,7 +38,7 @@ public class BeanFactory {
         return beans.get(id);
     }
 
-    private void tryAddPostProcessBean(Class<?> clazz){
+    private void tryAddPostProcessBean(Class<? extends BeanPostProcessor> clazz) {
         try {
             postProcessBeans.add(clazz.newInstance());
         } catch (InstantiationException | IllegalAccessException e) {

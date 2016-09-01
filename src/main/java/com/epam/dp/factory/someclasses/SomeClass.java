@@ -1,4 +1,6 @@
-package com.epam.dp.factory;
+package com.epam.dp.factory.someclasses;
+
+import com.epam.dp.factory.postprocessor.InjectRandomInt;
 
 /**
  * @author Ivan_Zhuravel
@@ -8,7 +10,6 @@ public class SomeClass {
 
     @InjectRandomInt
     private int intVal;
-
     private String test = "test";
 
     public String getTest() {

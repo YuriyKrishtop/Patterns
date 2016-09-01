@@ -1,4 +1,4 @@
-package com.epam.dp.factory;
+package com.epam.dp.factory.someclasses;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Iurii_Kryshtop on 8/29/2016.
+ * @author Ivan_Zhuravel
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface InjectRandomInt {
+@Target(ElementType.TYPE)
+public @interface Component {
+    String value();
 }
